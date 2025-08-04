@@ -46,6 +46,6 @@ Tanto si eres estudiante, desarrollador o alguien que trabaja en un objetivo a l
 
 ## Disclaimer
 
-Este es un producto mínimo viable, algo extramadamente sencillo que cumple con las funcionalidades mínimas necesarias. Además de un proyecto que estoy usando para aprender, lo
-estoy haciendo mientros mis habilidades van mejorando y aprendo cosas nuevas, por lo que la implementación de varias funcionalidades puede y seguramente cambie. Todas
+Este es un producto mínimo viable, algo extramadamente sencillo que cumple con las funcionalidades mínimas necesarias. Además es un proyecto que estoy usando para aprender, lo
+estoy haciendo mientras mis habilidades van mejorando y mientras aprendo cosas nuevas por lo que la implementación de varias funcionalidades puede y seguramente cambie. Todas
 Las contribuciones y sugerencias son bienvenidas.
