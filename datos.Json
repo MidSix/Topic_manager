@@ -22,5 +22,30 @@
                 "fin": "2025-07-30T13:34:53.570615"
             }
         ]
+    },
+    "db": {
+        "objetivo_horas": "20",
+        "tiempo_acumulado": 0.003177841944444445,
+        "sesiones": [
+            {
+                "inicio": "2025-08-03T11:26:39.347476",
+                "fin": "2025-08-03T11:26:50.787707"
+            }
+        ]
+    },
+    "45345": {
+        "objetivo_horas": "5345345",
+        "tiempo_acumulado": 0.0,
+        "sesiones": []
+    },
+    "pepito33": {
+        "objetivo_horas": "1212",
+        "tiempo_acumulado": 0.0,
+        "sesiones": []
+    },
+    "3434": {
+        "objetivo_horas": "434343",
+        "tiempo_acumulado": 0.0,
+        "sesiones": []
     }
 }

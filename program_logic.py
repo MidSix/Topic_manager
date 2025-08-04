@@ -20,16 +20,8 @@ def guardar_datos(datos):
     with open(ARCHIVO_DATOS, "w") as archivo:
         json.dump(datos, archivo, indent=4)
 
-def new_topic():
-    nombre = input(" Nombre de la materia: ").lower()
+def new_topic(nombre: str, objetivo:int):
     datos = cargar_datos()
-    
-    if nombre in datos: #Aquí recorremos las claves del diccionario datos, cada clave es una materia, si nombre es clave quiere decir que esa materia ya ha sido añadida
-        #Simplemente hay que recordar que al recorrer diccionarios iteramos sobre las claves por defecto.
-        print("Esa materia ya existe.")
-        return 1
-    
-    objetivo = float(input("¿Cuántas horas quieres dedicarle? "))
 
     nueva_materia = {
         "objetivo_horas": objetivo,
@@ -39,9 +31,16 @@ def new_topic():
 
     datos[nombre] = nueva_materia   #Estamos añadiendo un par clave-valor al diccionario.
     guardar_datos(datos)    #Guardamos en el Json el diccionario con el nuevo par clave-valor que acabamos de crear.
+    return datos
 
-    print(f"Materia '{nombre}' añadida correctamente.")
-    return 0
+def eliminiar_materia(nombre: str):
+    datos = cargar_datos()
+    if nombre in datos:
+        del datos[nombre]
+        guardar_datos(datos)
+        return datos
+    else:
+        return None
 #--------------------------------------------------------Funciones usadas para opcion 2-----------------------------------------------------------------------------------------------------------------
 
 def iniciar_sesion():
