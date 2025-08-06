@@ -12,7 +12,7 @@ This small tool tries to bring that same idea to study and personal projects: to
 
 Whether you're a student, a developer, or just someone working towards a long-term goal, **seeing the hours add up** can help you stay motivated and remind you that every small session counts.
 
-## Features (WIP)
+## Features (Completed)
 
 - Track time spent on study sessions per subject
 - Add and manage different tasks
@@ -60,7 +60,7 @@ Esta pequeña herramienta busca llevar esa misma idea al estudio o a proyectos p
 
 Tanto si eres estudiante, desarrollador o alguien que trabaja en un objetivo a largo plazo, **ver cómo se acumulan las horas** puede ayudarte a mantenerte motivado y recordarte que cada sesión cuenta.
 
-### Funcionalidades (en desarrollo)
+### Funcionalidades (Completadas)
 
 - Registrar el tiempo dedicado por materia o tarea
 - Añadir y gestionar tareas
