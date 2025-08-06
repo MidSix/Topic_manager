@@ -15,7 +15,7 @@ Whether you're a student, a developer, or just someone working towards a long-te
 ## Features (Completed)
 
 - Track time spent on study sessions per subject
-- Add and manage different tasks
+- Add and manage different topics
 - Store session logs with start/end time
 - View total time accumulated
 - Built using pure Python and JSON for simplicity, at least for now.
@@ -62,8 +62,8 @@ Tanto si eres estudiante, desarrollador o alguien que trabaja en un objetivo a l
 
 ### Funcionalidades (Completadas)
 
-- Registrar el tiempo dedicado por materia o tarea
-- Añadir y gestionar tareas
+- Registrar el tiempo dedicado por materia
+- Añadir y gestionar materias
 - Guardar sesiones con hora de inicio y fin
 - Consultar el tiempo total acumulado
 - Hecho con Python puro y JSON por simplicidad
