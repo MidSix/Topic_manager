@@ -1,10 +1,10 @@
 import json
 import os
 from datetime import datetime
-#-----------------------------------------------------------Funciones usadas para opcion 1---------------------------------------------------------------------------------
+#-----------------------------------------------------------Funciones usadas para "crear materia"---------------------------------------------------------------------------------
 ARCHIVO_DATOS = "datos.json"
 TEMP = "temp.json" #En temp.json están las materias que tienen sesiones abiertas.
-def cargar_datos():
+def cargar_materias():
     if not os.path.exists(ARCHIVO_DATOS) or os.path.getsize(ARCHIVO_DATOS) == 0:    #Manejo de errores:
         #Si el archivo no existe en el cwd(current work directory) entrará en el condicional, si existe pero está vacío completamente también entrará en el condicional
         #tras entrar creará ARCHIVO_DATOS, para el caso por default: datos.json con y le escribirá un diccionario vacío porque si se intenta cargar con load 
@@ -16,12 +16,12 @@ def cargar_datos():
     with open(ARCHIVO_DATOS, "r") as archivo:
         return json.load(archivo)
 
-def guardar_datos(datos):
+def guardar_materia(datos):
     with open(ARCHIVO_DATOS, "w") as archivo:
         json.dump(datos, archivo, indent=4)
 
 def new_topic(nombre: str, objetivo:int):
-    datos = cargar_datos()
+    datos = cargar_materias()
 
     nueva_materia = {
         "objetivo_horas": objetivo,
@@ -30,64 +30,48 @@ def new_topic(nombre: str, objetivo:int):
     }
 
     datos[nombre] = nueva_materia   #Estamos añadiendo un par clave-valor al diccionario.
-    guardar_datos(datos)    #Guardamos en el Json el diccionario con el nuevo par clave-valor que acabamos de crear.
+    guardar_materia(datos)    #Guardamos en el Json el diccionario con el nuevo par clave-valor que acabamos de crear.
     return datos
 
 def eliminiar_materia(nombre: str):
-    datos = cargar_datos()
+    datos = cargar_materias()
     if nombre in datos:
         del datos[nombre]
-        guardar_datos(datos)
+        guardar_materia(datos)
         return datos
     else:
         return None
-#--------------------------------------------------------Funciones usadas para opcion 2-----------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------Funciones usadas para iniciar una sesión-----------------------------------------------------------------------------------------------------------------
 
-def iniciar_sesion():
-    materia = input(" ¿Cuál materia quieres empezar a hacer? ").lower()
-
+def cargar_sesiones():
     if not os.path.exists(TEMP) or os.path.getsize(TEMP) == 0:
         with open(TEMP, "w") as temp:
             json.dump({}, temp)
 
     with open(TEMP, "r") as tmp:
-        temp = json.load(tmp)
+        return json.load(tmp)
 
+def guardar_sesion(datos):
+    with open(TEMP, "w") as tmp:
+        json.dump(datos, tmp)
+
+def iniciar_sesion(materia: str):
+    temp = cargar_sesiones()
     if not materia in temp:
-        datos = cargar_datos()
-        if materia in datos:
-            temp[materia] = datetime.now().isoformat()    #Con esto añadimos el par clave valor con la materia como clave y la fecha de inicio como valor.
-            #Sin .isoformat devuelve un objeto tipo datetime pero para guardarlo en nuestro .json necesitamos que sea un string. Isoformat se encarga de pasar el objeto datetime
-            #Y pasarlo a string. 
-            with open(TEMP, "w") as tmp:
-                json.dump(temp, tmp)
-
-            momento = datetime.fromisoformat(temp[materia])    #Esto se hace para tener un objeto tipo datetime y con ello poder usar el metodo de abajo.
-            #Partimos del isoformat que es el string y lo pasamos de nuevo como objeto tipo datetime.
-            print(f" Sesión iniciada para '{materia}' a las {momento.strftime('%H:%M:%S')}")
-
-        else:
-            print("materia no encontrada")
+        temp[materia] = datetime.now().isoformat()
+        guardar_sesion(temp)
+        return temp
     else:
-        print("Esta materia ya tiene una sesión abierta")
-#-----------------------------------------------------------------Funciones usadas para opcion 3------------------------------------------------------------------
-def terminar_sesion():
-    if os.path.getsize(TEMP) == 0:
-        print("No hay ninguna sesión activa")
         return 1
-    materia = input("¿Cuál sesión quieres terminar? ").lower()
-
-    with open(TEMP, "r") as temp:
-        sesiones = json.load(temp)
-
-    with open(ARCHIVO_DATOS, "r") as datosfile:
-        datos = json.load(datosfile)
-
+#-----------------------------------------------------------------Funciones usadas para terminar una sesión------------------------------------------------------------------
+def terminar_sesion(materia: str):
+    datos = cargar_materias()
+    sesiones = cargar_sesiones()
     momento_final = datetime.now() #Aqui no usamos el isoformat method, entonces al objeto en memoria que apunta el identificador momento_final es tipo datetime y no string.
     #---Para hacer operaciones como restas, sumas y demas entre fechas tenemos que tener los dos objetos tipo datetime, porque esos objetos tendran ahi sus metodos para 
     #Manejar estas operaciones.
-    if materia in sesiones:
-        momento_inicial = sesiones[materia] #Lo carga desde el diccionario cargado a este modulo  de temp.Json, por lo tanto es de tipo string. Hemos de pasarlo a datetime.
+
+    momento_inicial = sesiones[materia] #Lo carga desde el diccionario cargado a este modulo  de temp.Json, por lo tanto es de tipo string. Hemos de pasarlo a datetime.
     momento_inicial = datetime.fromisoformat(momento_inicial)
     duracion = (momento_final - momento_inicial).total_seconds() / 3600 # en horas.
     #Actualizacion del diccionario:
@@ -96,26 +80,12 @@ def terminar_sesion():
         "inicio": momento_inicial.isoformat(),
         "fin"   : momento_final.isoformat()
     })
+    del(sesiones[materia])
     #Con esto sobreescribimos datos. / si en lugar de escribir datos escribes {} entonces se borraria absolutamente todo de datos.json y se escribiria solo {}
     #Lo dicho, esta funcion reemplaza todo lo que esta en el .json. Por eso basta con cargar todo el diccionario modificar lo que haya que modificar y sobreescribir el anterior.
     #Entiendo que para proyectos pequeños como este no hay mayores problemas, ya se solucionara este problema con las bases de datos de verdad I guess. 
-    with open(ARCHIVO_DATOS, "w") as f:
-        json.dump(datos, f, indent=4)
+    guardar_materia(datos)
+    guardar_sesion(sesiones)
 
-    del(sesiones[materia])
-
-    with open(TEMP, "w") as tmp:
-        json.dump(sesiones, tmp)
-
-    print(f" Sesión terminada. Has sumado {duracion:.2f} horas a '{materia}'")
-#-----------------------------------------------------------------Funciones usadas para opcion 4------------------------------------------------------------------
-def progreso():
-    materia = input("¿De qué materia quieres saber sus horas acumuladas? ").lower()
-    with open(ARCHIVO_DATOS, "r") as f:
-        datos = json.load(f)
-    if materia in datos:
-        print(f"{datos[materia]["tiempo_acumulado"]:.1f} h acumuladas.")
-        return 0
-    else:
-        print("La materia no existe")
-        return 1
+    return sesiones,round(duracion,2),datos
+#-----------------------------------------------------------------Funciones usadas para ver el progreso------------------------------------------------------------------
