@@ -2,8 +2,11 @@ import json
 import os
 from datetime import datetime
 #-----------------------------------------------------------Funciones usadas para "crear materia"---------------------------------------------------------------------------------
-ARCHIVO_DATOS = "datos.json"
-TEMP = "temp.json" #En temp.json están las materias que tienen sesiones abiertas.
+ARCHIVO_DATOS = "base_datos/materias.json"
+TEMP = "base_datos/sesiones_activas.json" #En temp.json están las materias que tienen sesiones abiertas
+ruta = os.path.join(os.getcwd(), "base_datos")
+if not os.path.exists(ruta):
+    os.makedirs(ruta)
 def cargar_materias():
     if not os.path.exists(ARCHIVO_DATOS) or os.path.getsize(ARCHIVO_DATOS) == 0:    #Manejo de errores:
         #Si el archivo no existe en el cwd(current work directory) entrará en el condicional, si existe pero está vacío completamente también entrará en el condicional

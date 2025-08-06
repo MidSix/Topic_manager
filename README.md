@@ -20,6 +20,30 @@ Whether you're a student, a developer, or just someone working towards a long-te
 - View total time accumulated
 - Built using pure Python and JSON for simplicity, at least for now.
 
+## Guide – How to Use TopicManager
+
+1. **Run the program**  
+   Just double-click `TopicManager.exe`. No installation is required — it works as a portable app.
+
+2. **Add a new subject**  
+   Go to the "Subjects" section and click the + button. You must assign a name and set an **hour-based goal**.
+
+3. **Start a study session**  
+   Switch to the "Active sessions" section. Click the + button to start a session. A dropdown list will appear where you must select one of your existing subjects. Once selected, press the green button to begin tracking time.
+
+4. **Stop a session**  
+   In the "Sessions" section, click the subject you want to stop and press the "End session" button.
+
+5. **Delete a subject**  
+   From the "Subjects" section, click the desired subject and then press his red button to delete it. If it has an active session, that session will be stopped and removed as well.
+
+6. **See your progress**  
+   - In the "Subjects" section, click on any subject to view the **total hours studied** and the **Last registered session** (A session is registered once it's finished).  
+   - In the "Sessions" section, click on a subject to see the **history of the last two sessions**.
+
+7. **Where your data is saved**  
+   Session and subject data is stored locally in JSON format. No data is sent to the cloud.
+
 ## Disclaimer
 
 This is an MVP and a learning project. I'm building it as I go to improve my skills and explore ideas. Contributions and suggestions are welcome.
@@ -43,6 +67,31 @@ Tanto si eres estudiante, desarrollador o alguien que trabaja en un objetivo a l
 - Guardar sesiones con hora de inicio y fin
 - Consultar el tiempo total acumulado
 - Hecho con Python puro y JSON por simplicidad
+
+## Guía de uso – Cómo usar TopicManager
+
+1. **Ejecutar el programa**  
+   Haz doble clic en `TopicManager.exe`. No requiere instalación: es una aplicación portable.
+
+2. **Añadir una materia**  
+   Ve a la sección "Materias" y pulsa el botón +. Debes asignar un nombre y establecer un **objetivo de horas**.
+
+3. **Iniciar una sesión de estudio**  
+   Cambia a la sección "Sesiones activas". Pulsa el botón + para iniciar una nueva sesión. Aparecerá un menú desplegable donde debes seleccionar una de las materias existentes. Una vez seleccionada, pulsa el botón verde para comenzar a registrar el tiempo.
+
+4. **Detener una sesión**  
+   En la sección "Sesiones", haz clic sobre la materia que deseas detener y pulsa el botón "Terminar sesión".
+
+5. **Eliminar una materia**  
+   Desde la sección "Materias", haz clic en la materia deseada y luego pulsa su botón rojo para eliminarla. Si tiene una sesión activa, esta también se detendrá y eliminará.
+
+6. **Ver tu progreso**  
+   - En la sección "Materias", haz clic en cualquier materia para ver el **total de horas estudiadas** y la **última sesión registrada** (una sesión se registra cuando finaliza).  
+   - En la sección "Sesiones", haz clic en una materia para ver el **historial de las dos últimas sesiones**.
+
+7. **Dónde se guarda tu información**  
+   Los datos de materias y sesiones se guardan localmente en formato JSON. No se envía nada a la nube.
+"""
 
 ## Disclaimer
 

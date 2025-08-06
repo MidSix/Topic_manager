@@ -3,7 +3,6 @@ import json
 from tkinter import messagebox
 import program_logic as pl
 from tkinter import ttk
-DATOS = "datos.json"
 
 materias_global = pl.cargar_materias() #Esta funcion ya se encarga de manejar los errores como que no exista datos.Json o si esta vacio. Por ultimo nos carga los datos dentro.
 sesiones_global = pl.cargar_sesiones()
@@ -13,9 +12,7 @@ tarjetas_sesion   = {} #Para asociar cada tarjeta con su nombre y poder eliminar
 
 def actualizar_mensaje_vacio_materia():
     global mensaje_vacio_materias
-    print(materias_global)
     if not materias_global:
-        print(mensaje_vacio_materias.winfo_exists())
         if not mensaje_vacio_materias.winfo_exists():
             mensaje_vacio_materias = tk.Label(materias_frame, text="No tienes ninguna materia creada", font=("Helvetica", 12), fg="gray")
             mensaje_vacio_materias.place(relx=0.5, rely=0.5, anchor="center")
@@ -86,10 +83,9 @@ def popup_creacion_materia():
     def crear(event = None):
         nombre = entry_nombre.get().strip().lower()
         horas = entry_horas.get().strip()
-        with open(DATOS, 'r') as f:
-            materias = json.load(f)
+        materias = pl.cargar_materias()
 
-        if len(nombre) == 0 or not horas.isdigit():
+        if not nombre or not horas.isdigit():
             messagebox.showerror("Error", "Nombre vacío u horas no numéricas.")
             change_focus_set()
             return
@@ -107,14 +103,12 @@ def popup_creacion_materia():
             datos = pl.new_topic(nombre,horas)
             crear_tarjeta_materia(nombre)
             messagebox.showinfo("Éxito", "La materia ha sido creada exitosamente.")
-            change_focus_set()
+            popup.destroy()
             #Reemplazamos el diccionario que se cargo al inicio con el nuevo diccionario que contiene al anterior mas el dato agregado.
             #Esto es para que este sincronizado, pero no tiene que ver con mostrar la materia en la pantalla
             global materias_global
             materias_global = datos
             actualizar_mensaje_vacio_materia()
-            entry_nombre.delete(0, tk.END)
-            entry_horas.delete(0, tk.END)
 
     def change_focus_set():
         entry_nombre.focus_set()
@@ -269,10 +263,10 @@ def popup_creacion_sesion(e =  None):
     boton_cancelar = tk.Button(popup, text="❌", fg="white", bg="red", command=popup.destroy, cursor='hand2')
     boton_cancelar.place(x=20, y=160, width=40, height=30)
 
-    boton_crear = tk.Button(popup, text="✔️", fg="white", bg="green", command=lambda: empezar_sesion(combo), cursor='hand2')
+    boton_crear = tk.Button(popup, text="✔️", fg="white", bg="green", command=lambda: empezar_sesion(combo, popup), cursor='hand2')
     boton_crear.place(x=240, y=160, width=40, height=30)
 
-def empezar_sesion(combo: ttk):
+def empezar_sesion(combo: ttk, popup):
     materia_seleccionada = combo.get()
     sesion = pl.iniciar_sesion(materia_seleccionada)
     if sesion != 1:
@@ -281,8 +275,9 @@ def empezar_sesion(combo: ttk):
         sesiones_global = sesion
         crear_tarjeta_sesion(materia_seleccionada)
         actualizar_mensaje_vacio_sesion()
+        popup.destroy()
     else:
-        messagebox.showerror("Error", "Esta materia ya tiene una sesion iniciada")
+        messagebox.showerror("Error", "Esta materia ya tiene una sesion activa")
 
 def crear_tarjeta_sesion(materia: str):
     tarjeta_s = tk.Frame(contenedor_tarjetas_sesiones, bd=1, relief="solid", padx=10, pady=5)
@@ -313,6 +308,11 @@ def eliminar_sesion(materia: str, popup_anterior: tk):
 #------------------------------------------Root----------------------------------------------------------------------------
 
 root = tk.Tk()
+try:
+    icono = tk.PhotoImage(file="icon/icon.png")
+    root.iconphoto(True,icono)
+except Exception:
+    pass
 root.title("TopicManager")
 screen_width = root.winfo_screenwidth()
 screen_heigh = root.winfo_screenheight()
@@ -362,7 +362,7 @@ for frame in (inicio_frame, materias_frame, sesiones_frame):    #Los frames son 
 tk.Label(inicio_frame, text="Bienvenido al registro de estudio", font=("Helvetica", 14)).pack(pady=30)
 
 tk.Button(inicio_frame, text="Materias", width=20, cursor='hand2', relief='groove', command=lambda: mostrar_frame(materias_frame)).pack(pady=10)
-tk.Button(inicio_frame, text="Sesiones", width=20, cursor='hand2', relief='groove',command=lambda: mostrar_frame(sesiones_frame)).pack(pady=10)
+tk.Button(inicio_frame, text="Sesiones activas", width=20, cursor='hand2', relief='groove',command=lambda: mostrar_frame(sesiones_frame)).pack(pady=10)
 #---------------------------------------------------------------------------------------------------------------------------------------------
 
 #------------------------------------------Materias frame------------------------------------------------------------------
