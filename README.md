@@ -32,14 +32,14 @@ Whether you're a student, a developer, or just someone working towards a long-te
    Switch to the "Active sessions" section. Click the + button to start a session. A dropdown list will appear where you must select one of your existing subjects. Once selected, press the green button to begin tracking time.
 
 4. **Stop a session**  
-   In the "Sessions" section, click the subject you want to stop and press the "End session" button.
+   In the "Active essions" section, click the subject you want to stop and press the "End session" button.
 
 5. **Delete a subject**  
    From the "Subjects" section, click the desired subject and then press his red button to delete it. If it has an active session, that session will be stopped and removed as well.
 
 6. **See your progress**  
    - In the "Subjects" section, click on any subject to view the **total hours studied** and the **Last registered session** (A session is registered once it's finished).  
-   - In the "Sessions" section, click on a subject to see the **history of the last two sessions**.
+   - In the "Active sessions" section, click on a subject to see the **history of the last two sessions**.
 
 7. **Where your data is saved**  
    Session and subject data is stored locally in JSON format. No data is sent to the cloud.
@@ -80,14 +80,14 @@ Tanto si eres estudiante, desarrollador o alguien que trabaja en un objetivo a l
    Cambia a la sección "Sesiones activas". Pulsa el botón + para iniciar una nueva sesión. Aparecerá un menú desplegable donde debes seleccionar una de las materias existentes. Una vez seleccionada, pulsa el botón verde para comenzar a registrar el tiempo.
 
 4. **Detener una sesión**  
-   En la sección "Sesiones", haz clic sobre la materia que deseas detener y pulsa el botón "Terminar sesión".
+   En la sección "Sesiones activas", haz clic sobre la materia que deseas detener y pulsa el botón "Terminar sesión".
 
 5. **Eliminar una materia**  
    Desde la sección "Materias", haz clic en la materia deseada y luego pulsa su botón rojo para eliminarla. Si tiene una sesión activa, esta también se detendrá y eliminará.
 
 6. **Ver tu progreso**  
    - En la sección "Materias", haz clic en cualquier materia para ver el **total de horas estudiadas** y la **última sesión registrada** (una sesión se registra cuando finaliza).  
-   - En la sección "Sesiones", haz clic en una materia para ver el **historial de las dos últimas sesiones**.
+   - En la sección "Sesiones activas", haz clic en una materia para ver el **historial de las dos últimas sesiones**.
 
 7. **Dónde se guarda tu información**  
    Los datos de materias y sesiones se guardan localmente en formato JSON. No se envía nada a la nube.
