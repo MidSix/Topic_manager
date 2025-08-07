@@ -94,8 +94,12 @@ def popup_creacion_materia():
             messagebox.showerror("Error", "La materia ya existe.")
             change_focus_set()
         else:
-            if int(horas) > 787500:
+            horas = int(horas)
+            if horas > 787500:
                 messagebox.showerror("¿wtf?", "Eso son más de 90 años, ponga una cantidad real")
+                return 1
+            elif horas == 0:
+                messagebox.showerror("Error", "No puedes poner de objetivo cero horas.")
                 return 1
             if len(nombre) > 39:
                 messagebox.showerror("Error","Por favor introduce un nombre con menos de 39 caracteres")
@@ -129,6 +133,9 @@ def popup_creacion_materia():
 
 def popup_materia(materia: str):
     global materias_global
+    tiempo_acumulado = materias_global[materia]["tiempo_acumulado"]
+    objetivo_horas = materias_global[materia]["objetivo_horas"]
+    sesiones = materias_global[materia]["sesiones"]
     popup = tk.Toplevel()
     popup.title(f"{materia}")
     popup.geometry(f"300x200+{x_position}+{y_position}")
@@ -138,12 +145,14 @@ def popup_materia(materia: str):
     button.bind("<Button-1>", lambda event: popup_eliminar_materia(materia, popup))
     button.place(relx = 1.0, x=-102, y=10, anchor="nw")
     tk.Label(popup, text="Tiempo total:", font=('Helvetica',15)).pack(pady=(35, 0))
-    tk.Label(popup, text=f"{materias_global[materia]["tiempo_acumulado"]:.2f} horas", font=('Helvetica',10)).pack(pady=(5, 0))
+    tk.Label(popup, text=f"({tiempo_acumulado:.2f} / {objetivo_horas}) - horas", font=('Helvetica',10)).pack(pady=(5, 0))
+    percentage_of_accomplishment = (tiempo_acumulado * 100) / (objetivo_horas)
+    tk.Label(popup, text=f"{percentage_of_accomplishment:.2f} %").pack()
     tk.Label(popup, text="Última sesión:", font=('Helvetica',15)).pack(pady=(10, 0))
-    if len(materias_global[materia]["sesiones"]) == 0:
+    if not sesiones:
         tk.Label(popup, text=f"Aún no tienes ninguna sesión registrada para {materia}", font=('Helvetica',8)).pack(pady=(10, 0))
     else:
-        date_datetimeFormat = materias_global[materia]["sesiones"][-1]["fin"]
+        date_datetimeFormat = sesiones[-1]["fin"]
         date = date_datetimeFormat.split("T")[0]
         hour = date_datetimeFormat.split("T")[1][:5]
         tk.Label(popup, text=f"{date} - {hour} horas", font=('Helvetica',10)).pack(pady=(0, 0))
